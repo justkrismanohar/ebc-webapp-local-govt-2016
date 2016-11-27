@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html class="no-js" data-ng-strict-di>
+    <head>
+        <title id="main_title">EBCTT Web App</title>        
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/angular.min.js"></script>
+        <script src="js/angular-route.min.js"></script>
+        <script src="js/jquery-1.11.2.min.js"></script>        
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/underscore.js"></script>
+
+        <script src="js/app.js"></script>                
+        <script src="js/charts/Chart.min.js"></script>        
+    </head>
+
+    <body data-ng-app="ebcttwebapp">                
+        <header data-ng-controller="AppController">
+        
+            <div class="container-fluid">                
+                <div class="row">
+                    <div class="col-md-2">
+                        <h1 class="logo"><a href="/">Elections &amp; Boundaries Commission</a></h1>
+                    </div>
+                </div>
+            </div>        
+        </header>
+                        
+        <div data-ng-view></div>     
+        <footer></footer>           
+    </body>    
+</html>

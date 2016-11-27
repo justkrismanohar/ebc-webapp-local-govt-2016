@@ -1,0 +1,144 @@
+<!--
+<div class="custom-modal">
+    <div class="container">
+        <div class="col-md-12">
+            <div class="modal-container">
+                <div style="width: 100%;">
+                    <canvas id="modal-canvas" style="width: 560px; height: 410px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+
+<div class="leaderboard" data-ng-controller="LeadingsCtrl" ng-init="initLeaderBoard()">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6" data-ng-controller="ReportsCtrl" ng-init="initReport()">
+                <div id="canvas_container">
+                    <div style="width: 100%;" id="canvas-holder">
+                        <div class="canvas-head"><h2 style="text-align: center;">City/ Borough/ Corporation Won</h2></div>
+                        <canvas id="canvas" style="width: 560px; height: 410px;"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="results-container">
+                            <div class="results-table">
+                                <div class="table-headings">
+                                    <div class="info first" style="text-align: center">#</div>
+                                    <div class="info">Party</div>
+                                    <div class="info last">City / Borough / Corporation</div>
+                                    <div class="info last">Electoral Districts</div>
+                                </div>
+
+                                <div class="table-row" ng-repeat="result in lead" ng-class="{last:$last, even:$odd}">
+                                    <div class="info first" style="text-align: center">{{ $index + 1 }}</div>
+                                    <div class="info">{{ result.code }}</div>
+                                    <div class="info last">{{ result.r_count }}</div>
+                                    <div class="info last">{{ result.count }}</div>
+                                </div>
+                            </div>
+                            <div class="table-endings"></div> 
+                        </div>               
+                    </div>               
+                </div> 
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="results-container">
+                            <div class="results-table">
+                                <div class="table-headings">
+                                    <div class="info first" style="text-align: center;">VOTES PNM</div>
+                                    <div class="info" style="text-align: center;">VOTES PP</div>
+                                    <div class="info last" style="text-align: center;">VOTES OTHER</div>
+                                </div>
+                                <div class="table-row">
+                                    <div class="info first" style="text-align: center;">{{ total_pnm }}</div>
+                                    <div class="info" style="text-align: center;">{{ total_pp }}</div>
+                                    <div class="info last" style="text-align: center;">{{ total_other }}</div>
+                                </div>
+                            </div>
+                            <div class="table-endings"></div>
+                        </div>
+                    </div>
+                </div>              
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="results-container">
+                            <div class="results-table">
+                                <div class="table-headings">
+                                    <div class="info first" style="text-align: center;">TOTAL IN</div>                                    
+                                    <div class="info last" style="text-align: center;">TOTAL STATIONS</div>
+                                </div>
+                                <div class="table-row">
+                                    <div class="info first" style="text-align: center;">{{ total_in }}</div>                                    
+                                    <div class="info last" style="text-align: center;">{{ total_ps }}</div>
+                                </div>
+                            </div>
+                            <div class="table-endings"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>                        
+        </div>
+    </div>                         
+</div>
+
+<div class="listing" data-ng-controller="ListingCtrl">        
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="results-container">
+                    <table class="results-table">
+
+                        <tr class="table-headings">
+                            <th class="info first">#</th>
+                            <th class="info">CITY/ BOROUGH/ CORPORATION</th>
+                            <th class="info">ELECTORAL DISTRICT</th>                        
+                            <th class="info">#In <span style="font-family: 'OpenSansRegular', Arial, sans-serif;">/</span> #Max</th>
+                            <th class="info">PNM</th>
+                            <th class="info">UNC</th>
+                            <th class="info">COP</th>
+                            <th class="info">ILP</th>
+
+                            <th class="info" 
+                                 ng-if="result.code != 'PNM' && result.code != 'UNC' && result.code != 'COP' && result.code != 'ILP'"
+                                 ng-repeat="result in codes" 
+                                 ng-class="{last:$last}">{{ result.code }}</th>                        
+                        </tr>
+
+                        <tr class="table-row" ng-repeat="row in data" ng-class="{even:$odd, last:$last}">
+                            
+                            <!--<td class="info first">{{ $index + 1 }}</td>-->
+                            
+                            <td style="vertical-align: middle" class="info first" ng-if="row.rShowName === 1" rowspan="{{row.rRowSpan}}">{{ row.index }}</td>
+                            <td style="vertical-align: middle" class="info" ng-if="row.rShowName === 1" rowspan="{{row.rRowSpan}}">{{row.rName}}</td>
+                            <td class="info" style="font-size: 12px;">{{ row.name }}</td>                        
+                            <td class="info">{{ row.num_in }}/{{ row.num_ps_total }}</td>                        
+                            <td class="info" ng-class="{red:row.lead == row.pnm && row.lead != 0}">{{ row.pnm }}</td>
+                            <td class="info" ng-class="{gold:row.lead == row.unc && row.lead != 0}">{{ row.unc }}</td>
+                            <td class="info" ng-class="{gold:row.lead == row.cop && row.lead != 0}">{{ row.cop }}</td>
+                            <td class="info" ng-class="{other:row.lead == row.ilp && row.lead != 0}">{{ row.ilp }}</td>
+                            <td class="info" 
+                                 ng-repeat="vote in row.votes" 
+                                 ng-if="vote.code != 'PNM' && vote.code != 'UNC' && vote.code != 'COP' && vote.code != 'ILP'"
+                                 ng-class="{last:$last, 
+                                            gold:row.lead == vote.count && vote.count != 0 && vote.code == 'UNC',
+                                            red:row.lead == vote.count && vote.count != 0 && vote.code == 'PNM',
+                                            other:row.lead == vote.count && vote.count != 0 && vote.code != 'PNM' && vote.code != 'UNC'}">
+                                 {{ vote.count }}
+                            </td>                            
+                        </tr>                                                
+                    </table>
+                    <div class="table-endings"></div>
+                </div>
+            </div>                        
+        </div>                        
+    </div>
+</div>

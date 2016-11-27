@@ -1,0 +1,376 @@
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Functions [`FUNC]
+   ========================================================================== */
+
+@function em($target, $context: $base-font-size) {
+   @if $target == 0 { @return 0 }
+   @return $target / $context + 0em;
+}
+
+/* ==========================================================================
+   Mixins [`MIXN]
+   ========================================================================== */
+
+@mixin box-shadow-jutsu ($x, $y, $blur, $color) {
+    -webkit-box-shadow: $x $y $blur $color;
+    -moz-box-shadow:    $x $y $blur $color;
+    box-shadow:         $x $y $blur $color;
+
+}
+
+@mixin transition-jutsu ($attr, $duration, $mode) {
+    -webkit-transition: $attr $duration $mode;
+    -moz-transition: $attr $duration $mode;
+    transition: $attr $duration $mode;
+}
+
+/* ==========================================================================
+   Variables [`VARI]
+   ========================================================================== */
+
+$theme-blue: #498EC6;
+
+$os-regular : Arial, sans-serif;
+$os-bold : Arial, sans-serif;
+
+/* ==========================================================================
+   User Defined Base Styles [`USER]
+   ========================================================================== */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+html {	
+	font-size: 18px;
+	line-height: 1.5;
+}
+
+body {		
+    font-size: em(18px, 18px);     
+    background: #ffffff;
+}
+
+ul li {
+	list-style-type: none;
+}
+
+a,
+a:hover,
+a:focus,
+a:active,
+a:visited {    
+	text-decoration: none;
+}
+
+/* ==========================================================================
+   Typography [`TYPO]
+   ========================================================================== */
+
+//@font-face {
+//    font-family: 'OpenSansBold';
+//    src: url('../fonts/OpenSans-Bold-webfont.eot');
+//    src: url('../fonts/OpenSans-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+//         url('../fonts/OpenSans-Bold-webfont.woff2') format('woff2'),
+//         url('../fonts/OpenSans-Bold-webfont.woff') format('woff'),
+//         url('../fonts/OpenSans-Bold-webfont.ttf') format('truetype'),
+//         url('../fonts/OpenSans-Bold-webfont.svg#open_sansbold') format('svg');
+//    font-weight: normal;
+//    font-style: normal;
+//}
+//
+//@font-face {
+//    font-family: 'OpenSansRegular';
+//    src: url('..fonts/OpenSans-Regular-webfont.eot');
+//    src: url('..fonts/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+//         url('..fonts/OpenSans-Regular-webfont.woff2') format('woff2'),
+//         url('..fonts/OpenSans-Regular-webfont.woff') format('woff'),
+//         url('..fonts/OpenSans-Regular-webfont.ttf') format('truetype'),
+//         url('..fonts/OpenSans-Regular-webfont.svg#open_sansregular') format('svg');
+//    font-weight: normal;
+//    font-style: normal;
+//}
+
+.icon-alone {
+  display: inline-block; /* Fix for clickability issue in WebKit */
+}
+.screen-reader-text { /* Reusable, toolbox kind of class */
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+
+/* ==========================================================================
+   Header [`HEAD]
+   ========================================================================== */
+header {    
+    @include box-shadow-jutsu (0, 1px, 2px, rgba(0,0,0,0.1));
+    border-bottom: 1px solid $theme-blue;    
+    padding: 20px 0;
+}
+
+.logo a {
+    background: url(../img/ebc_logo.png) center center no-repeat;
+    background-size: 100%;
+    white-space: nowrap;
+    text-indent: 500%;
+    overflow: hidden;
+    display: block;
+    height: 108px;
+    width: 140px;    
+}
+
+/* ==========================================================================
+   Body [`BODY]
+   ========================================================================== */
+
+h2 {
+    font-size: em(18px, 18px);
+    font-family: $os-bold;    
+    font-weight: bold;
+}
+
+p {
+    font-size: em(16px, 18px);
+    font-family: $os-regular;    
+}
+
+.leaderboard {                
+    
+    .closing {
+        @include box-shadow-jutsu (0, 1px, 2px, rgba(0,0,0,0.1));
+        border-bottom: 4px solid $theme-blue;        
+    }
+    
+    .position {
+        text-align: center;
+    }
+}
+
+.headings,
+.results {
+    display: table;
+    width: 100%;
+    
+    ul {
+        display: table-row;
+        
+        li {
+            display: table-cell;
+        }
+    }
+}
+
+.headings {        
+    background: $theme-blue;
+    margin-top: 30px;
+    padding: 0 20px;        
+    height: 40px;        
+
+    h2 {
+        line-height: 40px;
+        color: #ffffff;                        
+    }
+}
+
+.results {
+    padding: 0 20px;
+
+    .row {
+        border-bottom: 1px solid $theme-blue; 
+        padding-bottom: 10px;
+        padding-top: 10px;
+        //height: 50px;                          
+
+        &.even {
+            background: lighten(#498ec6, 30%);
+        }
+
+        &.last {
+            border: none;
+        }
+    }        
+
+    p {
+        //line-height: 50px;
+    }
+}
+
+.results-table {      
+    display: table;    
+    width: 100%;        
+    
+    .table-headings {                  
+        background: $theme-blue;        
+        display: table-row;
+        line-height: 40px;
+        padding: 0 10px;
+        color: #ffffff;
+        height: 40px;
+        
+        .info {
+            font-size: em(16px, 18px);
+            font-family: $os-bold;
+            font-weight: bold;
+            text-align: center;
+            color: #ffffff;
+            
+            &.first {
+                border-radius: 4px 0 0 0;
+                text-align: left;
+            }
+            
+            &.last {
+                border-radius: 0 4px 0 0;
+            }
+        }
+    }
+        
+    .table-row {        
+        display: table-row;        
+        padding: 0 10px;
+        height: 40px;
+        
+        &.even {            
+            background: lighten(#498ec6, 40%);
+        }
+        
+        .info {
+            border-right: 1px solid #e2e2e2;
+            text-align: center;
+            
+            &.first {
+                text-align: left;
+            }
+            
+            &.last {
+                border: none;
+                border-bottom: 1px solid #e2e2e2;
+            }
+        }
+    }        
+    
+    .info {
+        border-bottom: 1px solid #e2e2e2;
+        border-right: 1px solid #ffffff;
+        font-size: em(16px, 18px);        
+        font-family: $os-regular;        
+        display: table-cell;
+        line-height: 40px;
+        padding: 0 10px;
+        color: #000000;  
+        
+        &.gold {
+            font-size: em(18px, 18px);
+            font-family: $os-bold;
+            font-weight: bold;
+            background: #FFD700;
+        }
+        
+        &.red {            
+            font-size: em(18px, 18px);
+            font-family: $os-bold;
+            font-weight: bold;
+            background: red;
+            color: #ffffff;
+        }
+        
+        &.other {
+            font-size: em(18px, 18px);
+            font-family: $os-bold;
+            font-weight: bold;
+            background: grey;
+            color: #ffffff;
+        }
+    }        
+}
+
+.table-endings {
+    @include box-shadow-jutsu (0, 1px, 2px, rgba(0,0,0,0.1));
+    border-bottom: 4px solid $theme-blue;        
+    border-radius: 0 0 4px 4px;
+    height: 4px;
+    width: 100%;        
+}
+
+footer {
+    padding-bottom: 60px;
+}
+
+/* ==========================================================================
+   Helpers [`HELP]
+   ========================================================================== */
+
+#overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: #ffffff;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+}
+
+.results-container {
+    @include box-shadow-jutsu (0, 1px, 4px, rgba(0,0,0,0.2));
+    background: #ffffff;
+    border-radius: 4px;
+    margin-top: 40px;
+    padding: 20px;
+}
+
+#canvas_container {
+    @include box-shadow-jutsu (0, 1px, 4px, rgba(0,0,0,0.2));
+    border-radius: 4px;
+    margin-top: 40px;
+    padding: 40px;
+    
+    #canvas {
+        height: 410px;
+        width: 560px;
+    }
+}
+
+/* ==========================================================================
+   Charts [`CHAR]
+   ========================================================================== */
+
+.ac-chart,
+svg {
+    width: 100% !important;
+}
+
+text {
+    font-size: em(13px, 18px);
+    font-family: $os-regular;
+}
