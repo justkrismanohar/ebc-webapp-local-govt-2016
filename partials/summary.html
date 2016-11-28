@@ -1,0 +1,51 @@
+<div class="listing" data-ng-controller="ListingCtrl">        
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="results-container">
+                    <table class="results-table">
+
+                        <tr class="table-headings">
+                            <th class="info first">#</th>
+                            <th class="info">CITY/ BOROUGH/ CORPORATION</th>                       
+                            <th class="info">#In <span style="font-family: 'OpenSansRegular', Arial, sans-serif;">/</span> #Max</th>
+                            <th class="info">PNM</th>
+                            <th class="info">UNC</th>
+                            <th class="info">COP</th>
+                            <th class="info">ILP</th>
+
+                            <th class="info" 
+                                 ng-if="result.code != 'PNM' && result.code != 'UNC' && result.code != 'COP' && result.code != 'ILP'"
+                                 ng-repeat="result in codes" 
+                                 ng-class="{last:$last}">{{ result.code }}</th>                        
+                        </tr>
+
+                        <tr class="table-row" ng-repeat="row in summary" ng-class="{even:$odd, last:$last}">
+                            
+                            <td class="info first">{{ $index + 1 }}</td>
+                            
+                            <!--<td style="vertical-align: middle" class="info first" >{{ row.index }}</td>-->
+                            <td style="vertical-align: middle" class="info" >{{row.rName}}</td>                        
+                            <td class="info">{{ row.num_in }}/{{ row.num_ps_total }}</td>                        
+                            <td class="info" ng-class="{red:row.lead == row.pnm && row.lead != 0}">{{ row.pnm }}</td>
+                            <td class="info" ng-class="{gold:row.lead == row.unc && row.lead != 0}">{{ row.unc }}</td>
+                            <td class="info" ng-class="{gold:row.lead == row.cop && row.lead != 0}">{{ row.cop }}</td>
+                            <td class="info" ng-class="{other:row.lead == row.ilp && row.lead != 0}">{{ row.ilp }}</td>
+                            
+                            <td class="info" 
+                                 ng-repeat="vote in row.votes" 
+                                 ng-if="vote.code != 'PNM' && vote.code != 'UNC' && vote.code != 'COP' && vote.code != 'ILP'"
+                                 ng-class="{last:$last, 
+                                            gold:row.lead == vote.count && vote.count != 0 && vote.code == 'UNC',
+                                            red:row.lead == vote.count && vote.count != 0 && vote.code == 'PNM',
+                                            other:row.lead == vote.count && vote.count != 0 && vote.code != 'PNM' && vote.code != 'UNC'}">
+                                 {{ vote.count }}
+                            </td>                            
+                        </tr>                                                
+                    </table>
+                    <div class="table-endings"></div>
+                </div>
+            </div>                        
+        </div>                        
+    </div>
+</div>
